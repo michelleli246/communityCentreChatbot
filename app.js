@@ -40,7 +40,47 @@ var act4 = {
     locationName: "Scarborough Village Recreation Centre"
 }
 
-var activities = [act1, act2, act3, act4];
+var act5 = {
+    name: "Bridge",
+    beginAge: 0,
+    endAge: 150,
+    type: "Tabletop Games",
+    locationName: "Wellesley Community Centre"
+}
+
+var act6 = {
+    name: "Swimming",
+    beginAge: 0,
+    endAge: 150,
+    type: "Fitness",
+    locationName: "Harrison Pool"
+}
+
+var act7 = {
+    name: "Adult Hockey",
+    beginAge: 18,
+    endAge: 150,
+    type: "Sports",
+    locationName: "Cecil Community Centre"
+}
+
+var act8 = {
+    name: "Figure Drawing",
+    beginAge: 0,
+    endAge: 150,
+    type: "Arts and Crafts",
+    locationName: "Cecil Community Centre"
+}
+
+var act9 = {
+    name: "Origami for Kids",
+    beginAge: 0,
+    endAge: 15,
+    type: "Arts and Crafts",
+    locationName: "Regent Park Community Centre"
+}
+
+var activities = [act1, act2, act3, act4, act5, act6, act7, act8, act9];
 var recActivities = [];
 
 function getMatchedActivity(age, type){
@@ -92,29 +132,45 @@ function (session, results) {
 
 function (session, results){
     if(results.response){
-        session.endDialog("great");
+        session.endDialog("Great");
     }else{
         var output = getMatchedActivity(age, type);
-        if(output[1] != null)
-            builder.Prompts.confirm(session, "Does " + output[1].name + " at " + output[1].locationName + " interest you?");
+        if(output[1] != null){
+            builder.Prompts.confirm(session, "Does " + output[1].name + " at " + output[1].locationName + " interest you?")
+            // if(secondQuestion == true){
+            //     session.endDialog("great");
+            // }
+            // else{
+            //     session.endDialog("awww");
+            // }
+        }
         else{
             session.beginDialog('noSuggestions');
         }
     }
 },
 
-function(session, results){
+function (session, results){
     if(results.response){
-        session.endDialog("great");
-    }else{
+        session.endDialog("Great. Find directions using https://goo.gl/maps/ZRvZVYmJ7ZKXkoHW7");
+    }
+    else{
         session.beginDialog('noSuggestions');
     }
-}
+},
+
+// function(session, results){
+//     if(results.response){
+//         session.endDialog("great");
+//     }else{
+//         session.beginDialog('noSuggestions');
+//     }
+// }
 ]);
 
 bot.dialog('noSuggestions',[
     function(session){
-        session.endDialog("We weren't able to find an activity matching all requirements, please try again.");
+        session.endDialog("We weren't able to find an activity matching all requirements, please try again. For more information, please visit https://www.toronto.ca/data/parks/prd/facilities/recreationcentres/index.html");
     }
 ]);
 
